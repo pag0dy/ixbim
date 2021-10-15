@@ -1,0 +1,72 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block title %}Inicio {% endblock %}
+{% block nav %}
+{% endblock %}
+{% block header %}
+<p class="main-font brand-text">iX</p>
+{% endblock %}
+{% block content %}
+<div class="">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tag }}"{% endif %}>{{ message }}</li>                         
+        {% endfor %}
+    </ul>
+    {% endif %} 
+</div>
+<div class="contain-3">
+    <div class="text-container">
+        <p class="main-font title-outside">Encuentra la información que necesitas...</p>               
+    </div>
+    <div>
+        <form class="form-outside main-font small-text-outside" action="user/loginPage" method="post">
+            <div class="logo-small">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 257.97 400" style="enable-background:new 0 0 257.97 400;" xml:space="preserve">
+                    <g>
+                        <g>
+                            <path class="st0" d="M101.5133209,213.5894623v170.3333893h42.2607422l-0.0366058-92.2417297
+                                c-0.0020447-5.1784973,4.1953888-9.3776245,9.3739166-9.3776245h2.1730804c3.9671021,0,5.8483734,3.4301453,7.3617706,7.097229
+                                l36.6152344,94.5221252h49.0353699l-68.4812469-181.1547852l0,0
+                                C154.0166473,219.1543427,135.7493591,222.2996979,101.5133209,213.5894623L101.5133209,213.5894623"/>
+                            <circle class="st0" cx="134.1766815" cy="166.8929596" r="36.5345764"/>
+                            <path class="st1" d="M85.0606842,134.713501c3.7098923-14.0331573,22.9046631-25.3241882,36.7765045-26.1306992
+                                l-20.3238525-93.8769226c-42.5833626,0-77.3529129,20.6360359-92.4252243,66.9060135L85.0606842,134.713501z"/>
+                            <path class="st2" d="M139.9277954,385.2941284l-0.040329-90.3074341c0-7.2831726,4.8810425-9.2731018,11.2910309-11.1297607
+                                l1.6130066-0.0645142l-1.2951355,0.1821899c-4.2355652,0.8804932-6.3263092,4.6098633-6.3263092,7.6651001l0.0228271,93.6316223
+                                L139.9277954,385.2941284"/>
+                            <path class="st2" d="M107.592247,213.4881592c0,0,7.2533112,5.223526,23.7059708,6.7357178
+                                c13.0333405,1.1979218,26.7787018-2.8696136,33.0262756-6.7746277
+                                c10.5805817-6.613327,16.1365967-12.2485809,16.1452484-12.6762085c0.0025177-0.1252441-8.8564758,6.4762268-22.3847198,11.71315
+                                c-4.4329224,1.6395721-14.0540314,4.7536163-26.7263184,4.4108582
+                                C123.1535263,216.6751099,107.592247,213.4881592,107.592247,213.4881592z"/>
+                            <path class="st2" d="M107.8289795,193.9722137l1.2097473,1.1493073c3.81073,4.2945862,17.8161697,11.2801819,29.2221375,9.7140503
+                                l0,0c14.0870667-1.7297211,24.7329102-10.7827148,30.1247559-21.5878448l1.0794373-2.8994598
+                                c0,0-6.7132416,6.5670471-11.4312744,9.873703c-3.5082855,2.9840546-14.3711395,8.6699066-24.9209442,8.7102356
+                                C127.5729141,199.6177216,107.8289795,193.9722137,107.8289795,193.9722137z"/>
+                        </g>
+                        <polygon class="st3" points="13.4129162,80.9409027 83.367012,129.199646 86.1679382,124.5314331 	"/>
+                        <path class="st3" d="M83.5297852,128.8722534c0.2487869,0.2562256,17.0257797-19.6411972,35.85569-22.2030182
+                            c0.2282257-0.031044,0.2581253-0.3320541,0.028511-0.3502502c-4.9567032-0.3927383-24.5056839-0.7968903-41.2086487,13.4417267"/>
+                    </g>
+                </svg>  
+            </div>
+            {% csrf_token %}
+            <label class="" for="username">Usuario:</label>
+            <input class="" type="text" name="username" id="username">
+            <label class="" for="password">Contraseña:</label>
+            <input class="" type="password" name="password" id="password">
+            <button type="submit" class="main-font smaller-text-outside">Ingresar</button>
+            <a class="main-font smaller-text-outside" href="user/reset_password">¿Olvidaste tu contraseña?</a>
+            <p class="main-font smaller-text-outside">¿No tienes una cuenta? <a href="user/register" class="">Regístrate!</a></p>
+        </form>
+    </div>
+    <div class="text-container-end">
+        <p class="main-font title-outside">y comprende la información que tienes!</p>
+    </div>
+</div>
+
+
+{% endblock %}

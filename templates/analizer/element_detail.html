@@ -1,0 +1,62 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Query {% endblock %}
+{% block nav %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="contain-header-rows">
+    <div class="grid-header-container">
+        <div class="border-right">
+            <p class="main-font main-text">{{ elemento.id }} {{ elemento.ifcEntity }}</p>
+            <p class="small-text italic">{{ elemento.name }}</p>
+        </div>
+        <div>
+            <p class="main-font main-text">Modelo: {{ elemento.ifcModel.name }}</p>
+            <p class="main-font small-text">Tipo: {{ elemento.ifcModel.model_type }}</p>  
+        </div>
+    </div>
+    <div class="contain-2-query">
+        <div class="edit-card">
+            <p class="main-font main-text bold">Atributos</p>
+            <table class="big-table-scroll-left main-font smaller-text">
+                <tr>
+                    <th>Atributo</th>
+                    <th>Valor</th>
+                </tr>
+                {% for atributo in atributos %}
+                <tr>
+                    <td>{{ atributo.name }}</td>
+                    <td>{{ atributo.value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
+            <p class="main-font main-text bold">Propiedades</p>
+            <table class="big-table-scroll-left main-font smaller-text">
+                <tr>
+                    <th>Property Set</th>
+                    <th>Propiedad</th>
+                    <th>Valor</th>
+                </tr>
+                {% for pset in psets %}
+                    {% for property in pset.properties.all %}
+
+                    <tr>
+                        <td>{{ property.pset.name }}</td>
+                        <td>{{ property.name }}</td>
+                        <td>{{ property.value }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+           
+        </div>  
+        <a href="{% url 'ifcquery' id=elemento.ifcModel.id %}">Volver atrás</a> 
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Query {% endblock %}
+{% block nav %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="contain-header-rows">
+    <div class="grid-header-container main-font header border-bottom">
+        <div class="border-right">
+            <p class="main-font main-text">{{ modelo.project.name }}</p>
+            <p class="small-text italic">{{ modelo.project.desc }}</p>
+        </div>
+        <div>
+            <p class="main-font main-text">Modelo: {{ modelo.name }}</p>
+            <p class="main-font small-text">Tipo: {{ modelo.model_type }}</p>  
+        </div>
+    </div>
+    <div class="contain-2-query">
+        <div class="edit-card">
+            <h3 class="main-font main-text bold">Buscar en el modelo</h3>
+            <form action="" method="get" class="form no-box-shadow main-font smaller-text">
+                {% csrf_token %}
+                {{ filtro_ifc.form.ifcEntity.label }}
+                {{ filtro_ifc.form.ifcEntity }}
+                {{ filtro_ifc.form.attributes__name.label }}
+                {{ filtro_ifc.form.attributes__name }}
+                {{ filtro_ifc.form.attributes__value.label }}
+                {{ filtro_ifc.form.attributes__value }}
+                <div class="button-div">
+                    <button class="yellow-button" type="submit">Buscar</button>
+                </div>
+            </form> 
+        </div>   
+        <div class="">
+            <p class="main-font main-text bold">Resultado</p>
+            <table class="big-table-scroll-left main-font smaller-text">
+                <tr>
+                    <th>iX ID</th>
+                    <th>Entidad</th>
+                    <th>Nombre</th>
+                </tr>
+                {% for elemento in elementos_modelo %}
+                <tr>
+                    <td><a href="{% url 'element_detail' id=elemento.id %}">{{ elemento.id }}</a></td>
+                    <td>{{ elemento.ifcEntity }}</td>
+                    <td>{{ elemento.name }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="button-div">
+                <p class="main-font smaller-text">{{ elementos_modelo.count }} elementos encontrados</p>
+            </div> 
+        </div>
+        <a href="{% url 'dashboard' %}">Volver atrás</a>
+    </div>
+</div>
+{% endblock %}

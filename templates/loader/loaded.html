@@ -1,0 +1,50 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% block title %}Loaded {% endblock %}
+{% block nav %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+    <div class="contain-2-alt">
+        <div class="edit-card">
+            <p class="main-font header">Información del archivo</p>
+            <table class="small-table main-font small-text">
+                <tbody>
+                    <tr>
+                        <td class="small-text-bold">Nombre del proyecto:</td>
+                        <td class="widest-col">{{ proyecto }}</td>
+                    </tr>
+                    <tr class="gold-bg">
+                        <td class="small-text-bold">Nombre del edificio:</td>
+                        <td class="dark-color">{{ edificio }}</td>
+                    </tr>
+                    <tr class="gold-bg">
+                        <td class="small-text-bold">Aplicación de origen:</td>
+                        <td class="dark-color">{{ aplicacion }}</td>
+                    </tr>
+                    <tr class="gold-bg">
+                        <td class="small-text-bold">Versión de IFC:</td>
+                        <td class="dark-color">{{ esquema }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="edit-card">
+            <p class="main-font header">Identifica tu modelo</p>
+            <form class="form main-font" action="{% url 'analizer' %}" method="post">
+                {% csrf_token %}
+                <label for="modelName">Nombre del modelo: </label>
+                <input class="form-control" type="text" name="modelName" id="modelName">
+                <label for="modelType">Especialidad: </label>
+                <select class="form-control" name="modelType" id="modelType">
+                    <option value="ARQ">Arquitectura</option>
+                    <option value="SIT">Sitio</option>
+                    <option value="VOL">Volumen</option>
+                </select>
+                <button class="yellow-button" type="submit">Analizar</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

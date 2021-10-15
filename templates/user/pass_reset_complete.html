@@ -1,0 +1,18 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block title %}Reset Password {% endblock %}
+{% block nav %}
+    {% load crispy_forms_tags %}
+{% endblock %}
+{% block header %}
+<p class="main-font brand-text">iX</p>
+{% endblock %}
+{% block content %}
+<div class="contain-2">
+    <div class="text-container-lead">
+        <p class="main-font title-outside">Listo!</p>
+        <p class="main-font small-text-outside">Cambiaste correctamente tu contraseña.</p>
+        <a class="smaller-text-outside" href="{% url 'home' %}">Ingresar</a>
+    </div>
+</div>
+{% endblock %}

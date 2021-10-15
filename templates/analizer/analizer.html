@@ -1,0 +1,20 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block title %}Analized {% endblock %}
+{% block nav %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+    <header>
+        <h3 class="row justify-content-center header-font gold_color">iX</h3>
+    </header>
+{% endblock %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <h3 class="gold_color">Listo!</h3>
+            <a href="ifcquery" class="btn btn-warning">Revisar información</a>
+            <a href="{% url 'reporter' %}" class="btn btn-warning">Descargar reporte</a>
+        </div>
+    </div>
+{% endblock %}

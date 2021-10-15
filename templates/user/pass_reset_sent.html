@@ -1,0 +1,18 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block title %}Reset Password {% endblock %}
+    {% load crispy_forms_tags %}
+{% block nav %}
+{% endblock %}
+{% block header %}
+<p class="main-font brand-text">iX</p>
+{% endblock %}
+{% block content %}
+<div class="contain-2">
+    <div class="text-container-lead">
+        <p class="main-font title-outside">Correo enviado</p>
+        <p class="main-font small-text-outside">Si el la dirección ingresada es correcta, recibirás en unos minutos las instrucciones para crear una nueva contraseña. Si no lo recibes, asegurate de que el correo ingresado tenga una cuenta creada en este sitio, y revisa tu carpeta de spam.</p>
+        <a class="smaller-text-outside" href="{% url 'home'%}">Volver atrás</a>
+    </div>
+</div>
+{% endblock %}

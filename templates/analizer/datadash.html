@@ -1,0 +1,28 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}IFC info {% endblock %}
+{% block nav %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+    <div class="contain-2-query">
+        <div class="edit-card">
+            <h3 class="main-font header">Información general</h3>
+            <ul>
+                <li>Proyecto: {{ modelo.project.name }}</li>
+                <li>{{ modelo.project.desc }}</li>
+                <hr>
+                <li>Modelo: {{ modelo.name }}</li>
+                <li>Tipo de modelo: {{ modelo.model_type }}</li>
+            </ul>
+        </div>   
+        
+        <div class="">
+            <p class="main-font header">Resultado</p>
+            
+        </div>
+    </div>
+{% endblock %}

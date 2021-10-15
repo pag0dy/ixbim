@@ -1,0 +1,47 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% block title %}User Profile {% endblock %}
+{% block nav %}
+    {% load crispy_forms_tags %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tag }}"{% endif %}>{{ message }}</li>                         
+        {% endfor %}
+    </ul>
+    {% endif %}        
+</div>
+<div class="contain-3">
+    <div class="edit-card">
+        <p class="main-font header">Edita tu perfil</p>
+    </div>
+    <div class="edit-card">
+        <p class="main-font header">Cambia tus datos</p>
+        <form class="form" action="{% url 'modify_user' %}" method="post">
+            {% csrf_token %}
+            <label for="username" class="">Usuario:</label>
+            <input class="" type="text" name="username" id="username" value="{{user.username}}">
+            <label for="email" class="">Email:</label>
+            <input class="" type="email" name="email" id="email" value="{{user.email}}">
+            <button type="submit" class="yellow-button">Actualizar</button>
+        </form>
+    </div>
+    <div class="edit-card">
+        <p class="main-font header">Cambia tu contraseña</p>
+        <form class="form" action="{% url 'modify_pass' %}" method="post">
+            {% csrf_token %}
+            <label for="pass1" class="">Nueva contraseña:</label>
+            <input class="" type="password" name="pass1" id="pass1">
+            <label for="pass2" class="">Confirma tu contraseña:</label>
+            <input class="l" type="password" name="pass2" id="pass2">
+            <button class="yellow-button" type="submit">Actualizar</button>
+        </form>
+    </div> 
+</div>
+{% endblock %}

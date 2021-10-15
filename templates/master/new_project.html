@@ -1,0 +1,27 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% block title %}New Project {% endblock %}
+{% block nav %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+    <div class="contain-3">
+        <div class="">
+        </div>
+        <div>
+            <p class="main-font header">Nuevo proyecto</p>
+            <form class="form main-font" action="{% url 'new_project' %}" method="post">
+                {% csrf_token %}
+                <label for="project_name" class="light-color">Nombre del proyecto</label>
+                <input class="form-control" type="text" name="project_name" id="project_name">
+                <label for="project_desc" class="light-color">Descripción del proyecto</label>
+                <input class="form-control" type="text" name="project_desc" id="project_desc">
+                <button class="yellow-button" type="submit">Crear</button>
+            </form>
+        </div>
+        <div>
+        </div>
+    </div>
+{% endblock %}

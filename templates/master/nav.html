@@ -1,0 +1,15 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% block nav %}
+<nav class="navbar">
+    <div class="main-menu">
+        <img class="logo-small" src="/static/master/img/ix_logo_orange.svg" alt="ix_logo">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'new_project' %}">Nuevo proyecto</a>  
+    </div>  
+    <div class="main-menu">
+        <a href="{% url 'user_profile' %}">Mi perfil</a>
+        <a href="{% url 'logoutUser' %}">Cerrar sesión</a>
+    </div>
+</nav>
+{% endblock %}

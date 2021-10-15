@@ -1,0 +1,59 @@
+{% extends 'master/base_in.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Dahsboard {% endblock %}
+{% block nav %}
+    {% include 'master/nav.html' %} 
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="contain-header-rows">
+    <div class="grid-header-container">
+        <h3 class="main-font header-text bold">TUS PROYECTOS</h3>
+    </div>
+    <div class="contain-2-scroll">
+        {% if proyectos %} 
+        {% for proyecto in proyectos %}
+        <div class="project-card main-font">
+            <p class="main-text">{{ proyecto.name }}</p>
+            <hr class="">
+            <p class="small-text">{{ proyecto.desc }}</p>
+            <a href="{% url 'project_management' id=proyecto.id %}" class="yellow-button">Editar proyecto</a>
+        </div>
+        <div class="table-section main-font smaller-text">
+            <table class="big-table">
+                <thead>
+                    <tr>
+                        <th class="wider-col">Modelo</th>
+                        <th class="small-col">Especialidad</th>
+                        <th class="medium-col">Fecha de carga</th>
+                        <th class="medium-col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for modelo in proyecto.models.all %}
+                    <tr>
+                        <td>{{ modelo.name }}</td>
+                        <td>{{ modelo.model_type }}</td>
+                        <td>{{ modelo.created_at }}</td>
+                        <td><a href="{% url 'ifcquery' id=modelo.id %}"><img src="/static/master/img/info.png" alt="info" class="small-icon"></a><a href="{% url 'reporter' id=modelo.id %}"><img src="/static/master/img/excel.png" alt="reporte" class="big-icon"></a><a href="{% url 'delete_model' id=modelo.id %}"><img src="/static/master/img/delete.png" alt="borrar" class="small-icon"></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="button-div">
+                <a href="{% url 'loader' project=proyecto.id %}" class="dark-button main-font">Agregar modelo</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        {% else %}
+        <p class="small-text main-font">Aún no has creado un proyecto</p>
+        <a href="{% url 'new_project' %}" class="yellow-button main-font">Crear un proyecto</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
