@@ -107,6 +107,12 @@ body, html
     text-shadow: 5px 5px 5px #000000;
 }
 
+.main-menu a.active{
+    color: #F4962F;
+    text-decoration: none;
+    text-shadow: 5px 5px 5px #000000;
+}
+
 
 .bg-inside {
     background: #f0f0f0;
@@ -294,9 +300,9 @@ body, html
     grid-template-columns: 1fr 1fr;
 }
 
-.grid-header-container{
+.grid-header-container-2{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
 }
 
 .form {

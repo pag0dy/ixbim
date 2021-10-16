@@ -151,3 +151,7 @@ def get_classification(elemento):
         return element_classification
 
     return element_classification
+
+def get_all_objects(doc):
+    entis = doc.by_type('IfcObject')
+    return entis
