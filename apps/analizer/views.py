@@ -8,7 +8,7 @@ from itertools import chain
 from ..loader.utils import filtro_archivo
 from .models import IfcModel, Elemento, Attribute, Pset, Property
 from ..master.models import Project
-from .utils import filtro_elemento, filtro_elemento_entidad, filtro_elemento_atributo , get_element_material, replace_null, filtro_modelo, get_element_space, get_element_level, get_space_level, get_space_zone, get_classification
+from .utils import * 
 from .filters import ElementFilter
 
 @login_required(login_url='loginPage')
@@ -18,71 +18,77 @@ def analizer(request):
             this_project = filter_project(request.session['current_project_id'])
             if 'file_id' in request.session:
                 Ifc_file = filtro_archivo(request.session['file_id'])
-                this_model = IfcModel.objects.create(name=request.POST['modelName'], project=this_project, model_type=request.POST['modelType'])
+                this_model = IfcModel.objects.create(name=request.POST['modelName'], project=this_project, model_type=request.POST['modelType'], application=request.POST['aplicacion'], schema=request.POST['esquema'])
                 request.session['id_modelo'] = this_model.id
                 with open(Ifc_file.nombre_archivo.path, 'r') as f:
                     doc = IfcOs.open(Ifc_file.nombre_archivo.path)
-                    entis = doc.by_type('IfcObject')
+                    entis = get_all_objects(doc)
                     proyecto = doc.by_type('IfcProject')
                     entidades = chain(proyecto, entis)
                     abstractas = ['IfcProject', 'IfcBuilding', 'IfcBuildingStorey', 'IfcSite', 'IfcGroup', 'IfcZone']
-
+                    attrs_excluded = ['OwnerHistory', 'ObjectPlacement', 'Representation']
                     for en in entidades:
                         print('ingresando ' + str(en.is_a()) + '...')
-                        try:
-                            el = Elemento.objects.create(name=en.Name, ifcEntity=en.is_a(), ifcModel = this_model)
-                            e_class = get_classification(en)
-                            if e_class == '':
-                                e_class='Sin información'
-                            else:
-                                pass
-                            print(e_class)
-                            Attribute.objects.create(name='Clasificación', value=e_class, element=el)
-                            if en.is_a() in abstractas:
-                                pass         
-                            elif en.is_a() == 'IfcSpace':
-                                s_level = get_space_level(en)
-                                Attribute.objects.create(name='Nivel', value=s_level, element=el)
-                                s_zone = get_space_zone(en)
-                                Attribute.objects.create(name='Zona', value= s_zone, element=el)
-                            else:
-                                e_material = str(get_element_material(en)).translate({ ord(c): None for c in "[]" })
-                                e_material = e_material[:254]
-                                if e_material:
-                                    print(e_material)
-                                    Attribute.objects.create(name='Material', value=e_material, element=el)
+                        if en.is_a() == 'IfcOpeningElement':
+                            pass
+                        else:
+                            try:
+                                el = Elemento.objects.create(name=en.Name, ifcEntity=en.is_a(), ifcModel = this_model)
+                                e_class = get_classification(en)
+                                if e_class == '':
+                                    e_class='Sin información'
                                 else:
                                     pass
-                                e_level = str(get_element_level(en))
-                                if e_level:
-                                    print(e_level)
-                                    Attribute.objects.create(name='Nivel', value=e_level, element=el)
+                                print(e_class)
+                                Attribute.objects.create(name='Clasificación', value=e_class, element=el)
+                                if en.is_a() in abstractas:
+                                    pass         
+                                elif en.is_a() == 'IfcSpace':
+                                    s_level = get_space_level(en)
+                                    Attribute.objects.create(name='Nivel', value=s_level, element=el)
+                                    s_zone = get_space_zone(en)
+                                    Attribute.objects.create(name='Zona', value= s_zone, element=el)
                                 else:
-                                    pass
-                                e_space = str(get_element_space(en))
-                                if e_space:
-                                    print(e_space)
-                                    Attribute.objects.create(name='Espacio', value=e_space, element=el)
-                                else:
-                                    pass
-                            
-                            atts = en.get_info()
-                            for item in atts.items():
-                                print("ingresando atributos...")
-                                item = replace_null(item)
-                                Attribute.objects.create(name=item[0], value=item[1], element=el)
-                            
-                            
-                            psets = ifcopenshell.util.element.get_psets(en)
-                            for key, value in psets.items():
-                                print("ingresando psets...")
-                                propset = Pset.objects.create(name=key, element=el)
-                                props = value
-                                for key, value in props.items():
-                                    print("ingresando propiedades...")
-                                    Property.objects.create(name=key, value=value, pset=propset)
-                        except ValueError:
-                            print('ups... algo falló')
+                                    e_material = str(get_element_material(en)).translate({ ord(c): None for c in "[]" })
+                                    e_material = e_material[:254]
+                                    if e_material:
+                                        print(e_material)
+                                        Attribute.objects.create(name='Material', value=e_material, element=el)
+                                    else:
+                                        pass
+                                    e_level = str(get_element_level(en))
+                                    if e_level:
+                                        print(e_level)
+                                        Attribute.objects.create(name='Nivel', value=e_level, element=el)
+                                    else:
+                                        pass
+                                    e_space = str(get_element_space(en))
+                                    if e_space:
+                                        print(e_space)
+                                        Attribute.objects.create(name='Espacio', value=e_space, element=el)
+                                    else:
+                                        pass
+                                
+                                atts = en.get_info()
+                                for item in atts.items():
+                                    if item[0] in attrs_excluded:
+                                        pass
+                                    else:
+                                        print("ingresando atributos...")
+                                        item = replace_null(item)
+                                        Attribute.objects.create(name=item[0], value=item[1], element=el)
+                                
+                                
+                                psets = ifcopenshell.util.element.get_psets(en)
+                                for key, value in psets.items():
+                                    print("ingresando psets...")
+                                    propset = Pset.objects.create(name=key, element=el)
+                                    props = value
+                                    for key, value in props.items():
+                                        print("ingresando propiedades...")
+                                        Property.objects.create(name=key, value=value, pset=propset)
+                            except ValueError:
+                                print('ups... algo falló')
             else:
                 return redirect('error')
 

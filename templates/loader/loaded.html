@@ -32,7 +32,7 @@
             </table>
         </div>
         <div class="edit-card">
-            <p class="main-font header">Identifica tu modelo</p>
+            <p class="main-font header">Configuración de almacenamiento</p>
             <form class="form main-font" action="{% url 'analizer' %}" method="post">
                 {% csrf_token %}
                 <label for="modelName">Nombre del modelo: </label>
@@ -43,6 +43,9 @@
                     <option value="SIT">Sitio</option>
                     <option value="VOL">Volumen</option>
                 </select>
+                <input type="hidden" name="esquema" value="{{ esquema }}">
+                <input type="hidden" name="aplicacion" value="{{ aplicacion }}">
+
                 <button class="yellow-button" type="submit">Analizar</button>
             </form>
         </div>

@@ -1,3 +1,4 @@
+from django.db.models.fields import BLANK_CHOICE_DASH
 from ..master.models import Project
 from django.db import models
 from django.contrib import messages
@@ -20,6 +21,8 @@ class IfcModel(models.Model):
     name = models.CharField(max_length=100, validators = [MinLengthValidator(limit_value = 2, message = 'El nombre debe tener más de dos caracteres')])
     project = models.ForeignKey(Project, related_name='models', on_delete=models.CASCADE, null =True)
     model_type = models.CharField(max_length=3, choices=MODEL_TYPE, default='ARQ')
+    application = models.CharField(max_length=50, null=True, blank=True)
+    schema = models.CharField(max_length=50, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
