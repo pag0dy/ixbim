@@ -28,7 +28,7 @@ def analizer(request):
                     abstractas = ['IfcProject', 'IfcBuilding', 'IfcBuildingStorey', 'IfcSite', 'IfcGroup', 'IfcZone']
                     attrs_excluded = ['OwnerHistory', 'ObjectPlacement', 'Representation']
                     for en in entidades:
-                        print('ingresando ' + str(en.is_a()) + '...')
+                        # print('ingresando ' + str(en.is_a()) + '...')
                         if en.is_a() == 'IfcOpeningElement':
                             pass
                         else:
@@ -39,7 +39,7 @@ def analizer(request):
                                     e_class='Sin información'
                                 else:
                                     pass
-                                print(e_class)
+                                # print(e_class)
                                 Attribute.objects.create(name='Clasificación', value=e_class, element=el)
                                 if en.is_a() in abstractas:
                                     pass         
@@ -49,22 +49,22 @@ def analizer(request):
                                     s_zone = get_space_zone(en)
                                     Attribute.objects.create(name='Zona', value= s_zone, element=el)
                                 else:
-                                    e_material = str(get_element_material(en)).translate({ ord(c): None for c in "[]" })
-                                    e_material = e_material[:254]
+                                    e_material = get_element_material(en)
                                     if e_material:
-                                        print(e_material)
-                                        Attribute.objects.create(name='Material', value=e_material, element=el)
+                                        for material in e_material:
+                                        # print(e_material)
+                                            Attribute.objects.create(name='Material', value=material, element=el)
                                     else:
                                         pass
                                     e_level = str(get_element_level(en))
                                     if e_level:
-                                        print(e_level)
+                                        # print(e_level)
                                         Attribute.objects.create(name='Nivel', value=e_level, element=el)
                                     else:
                                         pass
                                     e_space = str(get_element_space(en))
                                     if e_space:
-                                        print(e_space)
+                                        # print(e_space)
                                         Attribute.objects.create(name='Espacio', value=e_space, element=el)
                                     else:
                                         pass
@@ -74,18 +74,18 @@ def analizer(request):
                                     if item[0] in attrs_excluded:
                                         pass
                                     else:
-                                        print("ingresando atributos...")
+                                        # print("ingresando atributos...")
                                         item = replace_null(item)
                                         Attribute.objects.create(name=item[0], value=item[1], element=el)
                                 
                                 
                                 psets = ifcopenshell.util.element.get_psets(en)
                                 for key, value in psets.items():
-                                    print("ingresando psets...")
+                                    # print("ingresando psets...")
                                     propset = Pset.objects.create(name=key, element=el)
                                     props = value
                                     for key, value in props.items():
-                                        print("ingresando propiedades...")
+                                        # print("ingresando propiedades...")
                                         Property.objects.create(name=key, value=value, pset=propset)
                             except ValueError:
                                 print('ups... algo falló')

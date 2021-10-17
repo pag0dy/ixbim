@@ -85,6 +85,8 @@ body, html
     background: #520330;
     display: grid;
     grid-template-columns: 1fr 3fr 2fr;
+    position:fixed;
+    top: 0;
 }
 
 
