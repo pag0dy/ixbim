@@ -55,12 +55,16 @@ def get_element_material(elemento):
         associations = elemento.HasAssociations
         if associations:
             for a in associations:
+                print(a.is_a())
                 if a.is_a() == 'IfcRelAssociatesMaterial':
                     a_material = a.RelatingMaterial
-                    if a_material.is_a() == 'IfcMaterialLayerSet':
-                        a_layers = a_material.ForLayerSet.MaterialLayer
+                    print(a_material.is_a())
+                    if a_material.is_a() == 'IfcMaterialLayerSetUsage':
+                        a_layers = a_material.ForLayerSet.MaterialLayers
                         for layer in a_layers:
-                            materials.append(layer.Material.Name)
+                            materials.append(layer.Material.Name)                    
+                        # a_layers = a_material.ForLayerSet.LayerSetName
+                        # materials.append(a_layers)
                     elif a_material.is_a() == 'IfcMaterialProfileSet':
                         a_profiles = a_material.MaterialProfiles
                         for profile in a_profiles:
@@ -68,14 +72,19 @@ def get_element_material(elemento):
                     elif a_material.is_a() == 'IfcMaterialConstituentSet':
                         a_constituents = a_material.MaterialConstituents
                         for constituent in a_constituents:
-                            materials.append(constituent.Material.Name)
+                            if constituent.Material.Name in materials:
+                                pass
+                            else:
+                                materials.append(constituent.Material.Name)
                     elif a_material.is_a() == 'IfcMaterial':
+
                         materials.append(a_material.Material.Name)
                     else:
                         pass
     except:
         materials.append('Sin información') 
-
+    
+    print(materials)
     return materials
 
 def get_space_level(espacio):
@@ -155,3 +164,4 @@ def get_classification(elemento):
 def get_all_objects(doc):
     entis = doc.by_type('IfcObject')
     return entis
+
