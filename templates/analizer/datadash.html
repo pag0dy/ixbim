@@ -8,21 +8,41 @@
 {% block header %}
 {% endblock %}
 {% block content %}
-    <div class="contain-2-query">
-        <div class="edit-card">
-            <h3 class="main-font header">Información general</h3>
-            <ul>
-                <li>Proyecto: {{ modelo.project.name }}</li>
-                <li>{{ modelo.project.desc }}</li>
-                <hr>
-                <li>Modelo: {{ modelo.name }}</li>
-                <li>Tipo de modelo: {{ modelo.model_type }}</li>
-            </ul>
-        </div>   
-        
-        <div class="">
-            <p class="main-font header">Resultado</p>
-            
+<div class="contain-header-rows">
+    <div class="grid-header-container">
+        <h3 class="main-font header-text bold">DETALLES DEL PROYECTO</h3>
+    </div>
+    <div class="contain-2">
+        <div class="project-card no-color main-font">
+            <p class="main-text bold">{{ project.name }}</p>
+            <p class="small-text">{{ project.desc }}</p>
+            <p class="small-text">Modelos cargados: {{ models.count }}</p>
+        </div>
+        <div class="table-section main-font smaller-text" id="hide-me">       
+            <table class="big-table">
+                <thead>
+                    <tr>
+                        <th class="wider-col">Modelo</th>
+                        <th class="small-col">Especialidad</th>
+                        <th class="medium-col">Fecha de carga</th>
+                        <th class="medium-col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for modelo in project.models.all %}
+                    <tr>
+                        <td>{{ modelo.name }}</td>
+                        <td>{{ modelo.model_type }}</td>
+                        <td>{{ modelo.created_at }}</td>
+                        <td><a href="{% url 'ifcquery' id=modelo.id %}"><img src="/static/master/img/info.png" alt="info" class="small-icon"></a><a href="{% url 'reporter' id=modelo.id %}" id="report"><img src="/static/master/img/excel.png" alt="reporte" class="big-icon"></a><a href="{% url 'delete_model' id=modelo.id %}"><img src="/static/master/img/delete.png" alt="borrar" class="small-icon"></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="button-div">
+                <a href="{% url 'loader' project=project.id %}" class="dark-button main-font">Agregar modelo</a>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}

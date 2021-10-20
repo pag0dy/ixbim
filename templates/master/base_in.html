@@ -39,6 +39,7 @@
 
     {# Local scripts #}
     {% block scripts %}
+    <script src="{% static 'master/js/scripts.js' %}"></script>
     {% endblock %}
 
     {# Load extra scripts #}
@@ -47,7 +48,7 @@
     {% endblock %}
 
 </head>
-<body class='bg-inside'>
+<body class="bg-inside">
     {% load crispy_forms_tags %}
     {% block nav %}
     {% endblock %}

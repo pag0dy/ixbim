@@ -8,16 +8,33 @@
 {% block header %}
 {% endblock %}
 {% block content %}
+<script type="text/javascript">
+    function spinner() {
+        document.getElementById("submiter").innerText = "Cargando";
+        document.getElementById("submiter").disabled = true;
+        document.getElementById("bouncer").style.display = "flex";
+        document.getElementById("send-me").submit();
+    }
+</script>
+<div class="contain-header-rows">
+    <div class="grid-header-container">
+        <h3 class="main-font header">CARGA UN MODELO IFC</h3>
+    </div>
     <div class="contain-2">
-        <div>
-            <p class="main-font header">Carga un modelo IFC</p>
-        </div>
-        <div class="edit-card">
-            <form action="" method="post" enctype="multipart/form-data" class="form main-font">
+        <div></div>
+        <div class="edit-card-long">
+            <form action="" method="post" enctype="multipart/form-data" class="form no-color main-font" id="send-me">
                 {% csrf_token %}
                 {{ form }}
-                <button class="yellow-button main-font" type="submit">Cargar</button>
+                <button class="yellow-button main-font" type="submit" id="submiter" onclick="spinner()">Cargar</button>
             </form>
+            <div class="bouncer" id="bouncer">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}
