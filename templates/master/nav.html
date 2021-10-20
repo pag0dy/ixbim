@@ -4,15 +4,16 @@
 {% url 'dashboard' as dashboard %}
 {% url 'new_project' as new_project %}
 {% url 'user_profile' as user_profile %}
-<nav class="navbar">
+<div class="nav-sticky">
     <div class="main-menu">
         <img class="logo-small" src="/static/master/img/ix_logo_orange.svg" alt="ix_logo">
         <a class="{% if request.path == dashboard %} active {% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
         <a class="{% if request.path == new_project %} active {% endif %}" href="{% url 'new_project' %}">Nuevo proyecto</a>  
     </div>  
+    <div></div>
     <div class="main-menu">
         <a class="{% if request.path == user_profile %} active {% endif %}" href="{% url 'user_profile' %}">Mi perfil</a>
         <a href="{% url 'logoutUser' %}">Cerrar sesión</a>
     </div>
-</nav>
+</div>
 {% endblock %}

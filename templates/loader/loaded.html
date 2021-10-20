@@ -7,9 +7,21 @@
 {% block header %}
 {% endblock %}
 {% block content %}
+<script type="text/javascript">
+    function spinner() {
+        document.getElementById("submiter").innerText = "Cargando";
+        document.getElementById("submiter").disabled = true;
+        document.getElementById("bouncer").style.display = "flex";
+        document.getElementById("send-me").submit();
+    }
+</script>
+<div class="contain-header-rows">
+    <div class="grid-header-container">
+        <h3 class="main-font header">INGRESA LA INFORMACIÓN EN LA BASE DE DATOS</h3>
+    </div>
     <div class="contain-2-alt">
         <div class="edit-card">
-            <p class="main-font header">Información del archivo</p>
+            <p class="main-font main-text bold">ARCHIVO IFC CARGADO</p>
             <table class="small-table main-font small-text">
                 <tbody>
                     <tr>
@@ -32,8 +44,8 @@
             </table>
         </div>
         <div class="edit-card">
-            <p class="main-font header">Configuración de almacenamiento</p>
-            <form class="form main-font" action="{% url 'analizer' %}" method="post">
+            <p class="main-font main-text bold">IDENTIFICA TU MODELO</p>
+            <form class="form no-color main-font" action="{% url 'analizer' %}" method="post" id="send-me">
                 {% csrf_token %}
                 <label for="modelName">Nombre del modelo: </label>
                 <input class="form-control" type="text" name="modelName" id="modelName">
@@ -46,8 +58,16 @@
                 <input type="hidden" name="esquema" value="{{ esquema }}">
                 <input type="hidden" name="aplicacion" value="{{ aplicacion }}">
 
-                <button class="yellow-button" type="submit">Analizar</button>
+                <button class="yellow-button" type="submit" id="submiter" onclick="spinner()">Analizar</button>
             </form>
+            <div class="bouncer" id="bouncer">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}
+

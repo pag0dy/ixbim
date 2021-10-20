@@ -7,26 +7,26 @@
 {% block header %}
 {% endblock %}
 {% block content %}
-    <div class="contain-3-alt">
-        <div class="edit-card">
-            <p class="main-font header">Gestión de proyectos</p>
+<div class="contain-header-rows">
+    <div class="grid-header-container">
+        <h3 class="main-font header-text bold">EDITA TU PROYECTO</h3>
+        <div class="button-div">
             <a href="{% url 'delete_project' id=project.id %}" class="red-button">Eliminar proyecto</a>
         </div>
-        <div class="edit-card">
-            <p class="main-font header">Edita los datos del proyecto</p>
-            <form class="form main-font" action="{% url 'modify_project' id=project.id %}" method="post">
-                {% csrf_token %}
-                <label for="project_name" class="">Nombre del proyecto:</label>
-                <input class="" type="text" name="project_name" id="project_name" value="{{ project.name }}">
-                <label for="project_desc" class="">Descripción del proyecto:</label>
-                <textarea name="project_desc" id="project_desc" cols="30" rows="5" id="project_desc">{{ project.desc }}</textarea>
-                <button class="yellow-button main-font" type="submit">Editar</button>
-            </form>
-        </div>
-        <div class="edit-card">
-            <p class="main-font header">Edita sus modelos</p>
+    </div>
+    <div class="contain-2">
+        <form class="form main-font no-color" action="{% url 'modify_project' id=project.id %}" method="post">
+            {% csrf_token %}
+            <label for="project_name" class="">Nombre del proyecto:</label>
+            <input class="" type="text" name="project_name" id="project_name" value="{{ project.name }}">
+            <label for="project_desc" class="">Descripción del proyecto:</label>
+            <textarea name="project_desc" id="project_desc" cols="30" rows="5" id="project_desc">{{ project.desc }}</textarea>
+            <button class="yellow-button main-font" type="submit">Editar</button>
+        </form>
+        <div class="edit-card-right">
+            <p class="main-font header">O edita sus modelos</p>
             {% for model in project.models.all %}
-            <form class="form main-font" action="{% url 'modify_model' id=model.id %}" method="post">
+            <form class="form main-font no-color" action="{% url 'modify_model' id=model.id %}" method="post">
                 {% csrf_token %}
                 <label for="model_name" class="">Nombre del modelo:</label>
                 <input class="" type="text" name="model_name" id="model_name" value="{{ model.name }}">
@@ -39,6 +39,9 @@
                 <button class="yellow-button main-font" type="submit">Editar</button>
             </form>
             {% endfor %}
+        </div>
+        <div class="edit-card">
+            
         </div>
     </div>
 {% endblock %}

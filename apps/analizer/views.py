@@ -133,42 +133,13 @@ def dashboard(request):
 
 @login_required(login_url='loginPage')
 def datadash(request, id):
-    este_modelo = filtro_modelo(id)
-    if este_modelo:
-        elementos_modelo = este_modelo.entities.all()
-        niveles_ifc = filtro_elemento_entidad('IfcBuildingStorey', elementos_modelo)
-        espacios_ifc = filtro_elemento_entidad('IfcSpace', elementos_modelo)
-
-
-        # if proyecto_ifc:
-        #     este_proyecto_ifc = proyecto_ifc[0]
-        #     proyecto_ifc_longname = este_proyecto_ifc.attributes.get(name = 'LongName')
-        #     proyecto_ifc_desc = este_proyecto_ifc.attributes.get(name = 'Description')
-        # sitio_ifc = filtro_elemento_entidad('IfcSite', elementos_modelo)
-        # if sitio_ifc:
-        #     este_sitio = sitio_ifc[0]
-        #     sitio_composition = este_sitio.attributes.get(name='CompositionType')
-        #     sitio_lat = este_sitio.attributes.get(name='RefLatitud')
-        #     sitio_lon = este_sitio.attributes.get(name='RefLongitud')
-        #     sitio_ele = este_sitio.attributes.get(name='RefElevation')
-        #     sitio_title_num = este_sitio.attributes.get(name='LandTitleNumber')
-        #     sitio_addr = este_sitio.attributes.get(name='SiteAddress')
-        # edif_ifc = filtro_elemento_entidad('IfcBuilding', elementos_modelo)
-        # if edif_ifc:
-        #     este_edif = edif_ifc[0]
-        #     edif_longname = este_edif.attributes.get(name='LongName')
-        #     edif_desc = este_edif.attributes.get(name='Description')
-        #     edif_composition = este_edif.attributes.get(name='CompositionType')
-        #     edif_addr = este_edif.attributes.get(name='BuildingAddress')
-
-
-            
-
+    este_proyecto = filter_project(id)
+    if este_proyecto:
+        modelos_proyecto = este_proyecto.models.all()
 
     context = {
-        'modelo': este_modelo,
-        'niveles': niveles_ifc,
-        'espacios': espacios_ifc
+        'project': este_proyecto,
+        'models': modelos_proyecto
     }
     return render(request, 'analizer/datadash.html', context)
 

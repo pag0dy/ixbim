@@ -1,5 +1,6 @@
 from os import error
 from .models import *
+from ..master.models import Project
 import ifcopenshell as IfcOs
 import ifcopenshell.util
 import ifcopenshell.util.element
@@ -165,3 +166,11 @@ def get_all_objects(doc):
     entis = doc.by_type('IfcObject')
     return entis
 
+
+def filter_project(project_id):
+    proyectos = Project.objects.filter(id=project_id)
+    if proyectos:
+        este_proyecto = proyectos[0]
+        return este_proyecto
+    else:
+        return None
