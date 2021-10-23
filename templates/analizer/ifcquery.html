@@ -11,8 +11,8 @@
 <div class="contain-header-rows-2">
     <div class="grid-header-container main-font header border-bottom">
         <div class="border-right">
-            <p class="main-font main-text">{{ modelo.project.name }}</p>
-            <p class="main-font main-text">Modelo: {{ modelo.name }}</p>
+            <p class="main-font main-text">Proyecto {{ modelo.project.name }}</p>
+            <p class="main-font small-text">Modelo: {{ modelo.name }}</p>
         </div>
         <div>
             <p class="main-font main-text">Aplicación de orígen: {{ modelo.application }}</p>
@@ -22,7 +22,7 @@
     <div class="contain-2-query">
         <div class="edit-card">
             <h3 class="main-font main-text bold">Buscar en el modelo</h3>
-            <form action="" method="get" class="form no-box-shadow main-font smaller-text">
+            <form action="" method="get" class="form no-box-shadow no-color main-font smaller-text">
                 {% csrf_token %}
                 {{ filtro_ifc.form.ifcEntity.label }}
                 {{ filtro_ifc.form.ifcEntity }}
@@ -55,7 +55,7 @@
                 <p class="main-font smaller-text">{{ elementos_modelo.count }} elementos encontrados</p>
             </div> 
         </div>
-        <a href="{% url 'dashboard' %}">Volver atrás</a>
+        <a href="{% url 'datadash' id=modelo.project.id %}"><img src="/static/master/img/back.svg" alt="Volver atrás" class="small-icon"></a>
     </div>
 </div>
 {% endblock %}

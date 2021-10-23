@@ -1,12 +1,15 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.files.base import ContentFile
 import io
 import xlsxwriter as xr
 from .utils import *
-from ..analizer.utils import filtro_elemento, filtro_modelo
+from .models import ModelReport
+from ..analizer.utils import filtro_modelo
+
 
 @login_required(login_url='loginPage')
-def reporter(request, id):
+def reporter(request):
     output = io.BytesIO()
     workbook = xr.Workbook(output)
     title = workbook.add_format(
@@ -26,7 +29,7 @@ def reporter(request, id):
     )
 
     portada = workbook.add_worksheet('RESUMEN')
-    este_modelo = filtro_modelo(id)
+    este_modelo = filtro_modelo(request.session['id_modelo'])
 
     portada.merge_range('B2:C2', 'Datos del proyecto', subtitle)
     portada.set_column('B:B', 15)
@@ -105,17 +108,52 @@ def reporter(request, id):
                             pass                    
 
 
+
+
     workbook.close()
     output.seek(0)
+    report: bytes = output.getvalue()
+    reporte = ContentFile(report)
+    new_report = ModelReport.objects.create(url='', ifcModel=este_modelo)
     nombre_modelo = str(este_modelo.name)
     nombre_reporte = nombre_modelo.replace(" ", "_")
     filename = nombre_reporte + '.xlsx'
-    response =HttpResponse(
-            output,
-            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    # response =HttpResponse(
+    #         output,
+    #         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    #     )
+    # response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    new_report.url.save(filename, reporte)
 
-    return response
+
+    return redirect('dashboard')
+
+@login_required(login_url='loginPage')
+def downloadReport(request, id):
+    este_reporte = ModelReport.objects.get(id=id)
+    if este_reporte:
+        este_modelo = este_reporte.ifcModel
+        print(este_modelo)
+        este_reporte = este_modelo.report
+        print(este_reporte.url)
+        print(este_reporte.id)
+
+        file_name = str(este_modelo.name) + '.xlsx'
+
+        file_location = 'media/' + str(este_reporte.url)
+
+        with open(file_location, 'rb') as fl:
+            data = fl.read()
 
 
+    
+            response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+            response['Content-Disposition'] = "attachment; filename=%s" % file_name
+
+        return response
+    
+    else:
+        return HttpResponse('No se encontró el archivo')
+
+    

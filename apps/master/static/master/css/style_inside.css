@@ -50,11 +50,11 @@ body, html
 .contain-2 {
     width:95%;
     max-width: 1000px;
-    margin: auto;
+    /* margin: auto; */
     padding-top:2%;
-    gap: 1em;
+    column-gap: 2em;
     display:grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1.5fr 4fr;
 }
 
 
@@ -136,7 +136,7 @@ body, html
 
 
 .bg-inside {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
 }
 
 /* Colores logo SVG */
@@ -154,6 +154,10 @@ body, html
 }
 
 .small-icon {
+    width: 30px;
+}
+
+.small-delete {
     width: 30px;
 }
 
@@ -319,6 +323,8 @@ body, html
     padding: 10px 30px 10px 35px;
 }
 
+
+
 .edit-card {
     padding-right: 1.5rem;
     margin-bottom: 1.5rem;
@@ -416,17 +422,18 @@ input[type=file]::-webkit-file-upload-button {
 }
 
 .yellow-button {
-    font-weight: bolder;
+    font-weight: bold;
     font-size: 0.75rem;
     color: #f0f0f0;
     text-decoration: none;
+    text-align: center;
     width:35%;
     min-width: fit-content;
     padding:5px;
     margin: 5px;
     border-radius: 2px;
     border-style: none;
-    background: #F4962F;
+    background: #520330;
     box-shadow: 8px 8px 12px 0 rgba(0,0,0, 0.25),
     -8px -8px 12px 0 rgba(255,255,255,0.3);
 }
@@ -442,7 +449,7 @@ input[type=file]::-webkit-file-upload-button {
     margin: 5px;
     border-radius: 2px;
     border-style: none;
-    background: #BDBBCB;
+    background: #FF9723;
     box-shadow: none;
 }
 
@@ -480,14 +487,14 @@ input[type=file]::-webkit-file-upload-button {
 .red-button {
     font-weight: bolder;
     font-size: 0.75rem;
-    color: #da1c1c;
+    color: #f0f0f0;
     text-decoration: none;
     width:fit-content;
     padding:5px;
     margin: 5px;
     border-radius: 2px;
     border-style: none;
-    background: #f0f0f0;
+    background: #da1c1c;
     box-shadow: 4px 4px 10px 0 rgba(0,0,0, 0.25),
     -4px -4px 10px 0 rgba(255,255,255,0.3);
 }
@@ -519,16 +526,27 @@ input[type=file]::-webkit-file-upload-button {
     margin-top: 10px;
 }
 
+.more-space-top {
+    margin-top: 20px;
+}
+
 .table-section {
     display: grid;
     grid-template-rows: 3fr 1fr;
     max-width: 1200px;
     margin-bottom: 2rem;
 }
+
 .button-div {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+}
+
+.button-div-end {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
 }
 
 .bouncer {
