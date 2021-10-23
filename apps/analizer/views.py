@@ -97,8 +97,8 @@ def analizer(request):
 
         print("limpiando base de datos...")
         Ifc_file.delete()
-        
-        return redirect('dashboard')
+           
+        return redirect('reporter')
 
     else:
         return redirect('error')

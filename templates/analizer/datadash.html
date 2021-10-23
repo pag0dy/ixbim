@@ -34,15 +34,20 @@
                         <td>{{ modelo.name }}</td>
                         <td>{{ modelo.model_type }}</td>
                         <td>{{ modelo.created_at }}</td>
-                        <td><a href="{% url 'ifcquery' id=modelo.id %}"><img src="/static/master/img/info.png" alt="info" class="small-icon"></a><a href="{% url 'reporter' id=modelo.id %}" id="report"><img src="/static/master/img/excel.png" alt="reporte" class="big-icon"></a><a href="{% url 'delete_model' id=modelo.id %}"><img src="/static/master/img/delete.png" alt="borrar" class="small-icon"></a></td>
+                        <td>
+                            <a href="{% url 'ifcquery' id=modelo.id %}"><img src="/static/master/img/info.png" alt="info" class="small-icon"></a>
+                            <a href="{% url 'downloadReport' id=modelo.report.id %}"><img src="/static/master/img/excel.png" alt="reporte" class="big-icon"></a>
+                            <a href="{% url 'delete_model' id=modelo.id %}" class="delete" onclick="return confirm('¿Estás seguro de que quieres borrar este modelo?')"><img src="/static/master/img/delete.png" alt="borrar" class="small-delete"></a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <div class="button-div">
-                <a href="{% url 'loader' project=project.id %}" class="dark-button main-font">Agregar modelo</a>
+            <div class="button-div-end">
+                <a href="{% url 'loader' project=project.id %}" class="yellow-button main-font">Agregar modelo</a>
             </div>
         </div>
     </div>
+    <a href="{% url 'dashboard' %}"><img src="/static/master/img/back.svg" alt="Volver atrás" class="small-icon more-space-top"></a>
 </div>
 {% endblock %}

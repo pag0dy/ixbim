@@ -19,8 +19,8 @@
             <p class="main-text">{{ proyecto.name }}</p>
             <p class="small-text">{{ proyecto.desc }}</p>
             <div class="button-div">
-                <a href="{% url 'project_management' id=proyecto.id %}" class="yellow-button">Editar proyecto</a>
-                <a href="{% url 'datadash' id=proyecto.id %}" class="yellow-button">Más información</a>
+                <a href="{% url 'project_management' id=proyecto.id %}" class="yellow-button">Editar</a>
+                <a href="{% url 'datadash' id=proyecto.id %}" class="yellow-button">Ver más</a>
             </div>
         </div>
         {% endfor %}
